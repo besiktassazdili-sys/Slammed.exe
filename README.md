@@ -32,3 +32,7 @@ The creator of **Slammed Virus** is not responsible for any:
 * Data loss from forced system reboots.
 
 **RUN ONLY IN A VIRTUAL MACHINE (VM).**
+
+
+To dowland It click link: 
+https://github.com/besiktassazdili-sys/Slammed.exe/releases/
