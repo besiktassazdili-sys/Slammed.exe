@@ -1,1 +1,156 @@
-
+String myHtml = "<!DOCTYPE html>\n" +
+"<html lang=\"en\">\n" +
+"<head>\n" +
+"    <meta charset=\"UTF-8\">\n" +
+"    <title>SLAWIN_SYS_QUANTUM_CRASH</title>\n" +
+"    <style>\n" +
+"        * {\n" +
+"            touch-action: none;\n" +
+"            -webkit-user-select: none;\n" +
+"            user-select: none;\n" +
+"            -webkit-tap-highlight-color: transparent;\n" +
+"            cursor: none !important;\n" +
+"        }\n" +
+"        body, html {\n" +
+"            margin: 0; padding: 0;\n" +
+"            width: 100%; height: 100%;\n" +
+"            background: #000; overflow: hidden;\n" +
+"        }\n" +
+"        #terminal-overlay {\n" +
+"            position: fixed; top: 0; left: 0; width: 100%; height: 100%;\n" +
+"            background: #000; color: #ff0055; padding: 30px; z-index: 999999;\n" +
+"            font-family: 'Courier New', monospace; font-size: 1.3rem; display: block;\n" +
+"            box-sizing: border-box;\n" +
+"        }\n" +
+"        canvas {\n" +
+"            position: fixed; top: 0; left: 0; width: 100%; height: 100%;\n" +
+"            z-index: 100000; pointer-events: none;\n" +
+"        }\n" +
+"    </style>\n" +
+"</head>\n" +
+"<body>\n" +
+"\n" +
+"    <div id=\"terminal-overlay\">\n" +
+"        <div id=\"text-stream\"></div>\n" +
+"    </div>\n" +
+"    <canvas id=\"glitch-canvas\"></canvas>\n" +
+"\n" +
+"    <script>\n" +
+"        const canvas = document.getElementById('glitch-canvas');\n" +
+"        const ctx = canvas.getContext('2d', { willReadFrequently: true });\n" +
+"        const stream = document.getElementById('text-stream');\n" +
+"        \n" +
+"        let t = 0;\n" +
+"        let isOverdrive = false;\n" +
+"        let audioCtx, scriptNode;\n" +
+"        let glitchIntensity = 10;\n" +
+"\n" +
+"        // 1. ADVANCED LOGGING SEQUENCE\n" +
+"        const bootLogs = [\n" +
+"            \"> [KERNEL] INITIALIZING QUANTUM_CRASH ENGINE...\",\n" +
+"            \"> [INTEGRATION] CODES DETECTED: FORMULA_9 & FORMULA_7...\",\n" +
+"            \"> [MEMORY] ALLOCATING GRAPHICS BUFFER FEEDBACK CHANNELS...\",\n" +
+"            \"> [!] CRITICAL OVERCLOCK ENGAGED. CAPACITORS AT 100%\",\n" +
+"            \"> >>> TAP SCREEN TO BREACH CORE <<<\"\n" +
+"        ];\n" +
+"        let logLine = 0;\n" +
+"        function streamLogs() {\n" +
+"            if(logLine < bootLogs.length) {\n" +
+"                stream.innerHTML += bootLogs[logLine++] + \"<br><br>\";\n" +
+"                setTimeout(streamLogs, 250);\n" +
+"            }\n" +
+"        }\n" +
+"        window.onload = streamLogs;\n" +
+"\n" +
+"        // 2. THE LIVING AUDIO ENGINE\n" +
+"        function initAudio() {\n" +
+"            audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 11025 });\n" +
+"            scriptNode = audioCtx.createScriptProcessor(4096, 0, 1);\n" +
+"            \n" +
+"            scriptNode.onaudioprocess = (e) => {\n" +
+"                let out = e.outputBuffer.getChannelData(0);\n" +
+"                for (let i = 0; i < 4096; i++) {\n" +
+"                    let baseMath = (t*9&t>>4)|(t*5&t>>7)|(t*3&t/1024);\n" +
+"                    let alarmMath = (t>>7|t|t>>6)*10+4*(t&t>>13|t>>6);\n" +
+"                    \n" +
+"                    let finalByte = (baseMath ^ alarmMath) * (glitchIntensity % 7);\n" +
+"                    \n" +
+"                    out[i] = ((finalByte & 255) / 128.0) - 1.0;\n" +
+"                    t++;\n" +
+"                }\n" +
+"            };\n" +
+"            scriptNode.connect(audioCtx.destination);\n" +
+"        }\n" +
+"\n" +
+"        // 3. THE RECURSIVE GEOMETRIC SLICE ENGINE\n" +
+"        function runQuantumEngine() {\n" +
+"            if(!isOverdrive) return;\n" +
+"\n" +
+"            const w = canvas.width;\n" +
+"            const h = canvas.height;\n" +
+"\n" +
+"            ctx.fillStyle = `rgba(${Math.random()*255}, 0, ${Math.random()*255}, 0.15)`;\n" +
+"            ctx.fillRect(0, Math.random() * h, w, Math.random() * 80);\n" +
+"\n" +
+"            for (let i = 0; i < 15; i++) {\n" +
+"                let sourceY = Math.random() * h;\n" +
+"                let sliceH = Math.random() * 120 + 20;\n" +
+"                let distortionX = (Math.random() * glitchIntensity * 4) - (glitchIntensity * 2);\n" +
+"                \n" +
+"                ctx.drawImage(canvas, 0, sourceY, w, sliceH, distortionX, sourceY + (Math.random()*10 - 5), w + distortionX, sliceH);\n" +
+"            }\n" +
+"\n" +
+"            if (t % 3 === 0) {\n" +
+"                ctx.strokeStyle = t % 2 === 0 ? \"#ff0055\" : \"#00ffaa\";\n" +
+"                ctx.lineWidth = Math.random() * 4;\n" +
+"                ctx.strokeRect(glitchIntensity, glitchIntensity, w - (glitchIntensity*2), h - (glitchIntensity*2));\n" +
+"                ctx.drawImage(canvas, 8, 8, w - 16, h - 16, 0, 0, w, h);\n" +
+"            }\n" +
+"\n" +
+"            if (Math.random() > 0.92) {\n" +
+"                ctx.fillStyle = \"white\";\n" +
+"                ctx.globalCompositeOperation = \"difference\";\n" +
+"                ctx.fillRect(0, 0, w, h);\n" +
+"                ctx.globalCompositeOperation = \"source-over\";\n" +
+"                \n" +
+"                glitchIntensity = Math.floor(Math.random() * 40) + 10;\n" +
+"            }\n" +
+"\n" +
+"            requestAnimationFrame(runQuantumEngine);\n" +
+"        }\n" +
+"\n" +
+"        // TRIGGER ENGAGEMENT\n" +
+"        document.getElementById('terminal-overlay').addEventListener('click', () => {\n" +
+"            isOverdrive = true;\n" +
+"            document.getElementById('terminal-overlay').style.display = 'none';\n" +
+"            \n" +
+"            canvas.width = window.innerWidth;\n" +
+"            canvas.height = window.innerHeight;\n" +
+"\n" +
+"            ctx.fillStyle = \"#111\";\n" +
+"            ctx.fillRect(0, 0, canvas.width, canvas.height);\n" +
+"            ctx.font = \"bold 40px monospace\";\n" +
+"            ctx.fillStyle = \"#ff0055\";\n" +
+"            ctx.fillText(\"CRASH_SEQUENCE_LOADED\", canvas.width/4, canvas.height/2);\n" +
+"\n" +
+"            document.documentElement.requestFullscreen();\n" +
+"            setInterval(() => {\n" +
+"                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});\n" +
+"            }, 100);\n" +
+"\n" +
+"            initAudio();\n" +
+"            runQuantumEngine();\n" +
+"        });\n" +
+"\n" +
+"        window.onkeydown = (e) => e.preventDefault();\n" +
+"        document.addEventListener(\"backbutton\", (e) => e.preventDefault(), false);\n" +
+"        window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };\n" +
+"    </script>\n" +
+"</body>\n" +
+"</html>\";\n" +
+"\n" +
+"// --- WEBVIEW CONFIGURATION ---\n" +
+"binding.webview1.getSettings().setJavaScriptEnabled(true);\n" +
+"binding.webview1.getSettings().setDomStorageEnabled(true);\n" +
+"binding.webview1.getSettings().setMediaPlaybackRequiresUserGesture(false); // Ensures audio autoplays without issues\n" +
+"binding.webview1.loadDataWithBaseURL(null, myHtml, \"text/html\", \"utf-8\", null);\n";
