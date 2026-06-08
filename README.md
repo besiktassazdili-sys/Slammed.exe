@@ -1,3 +1,10 @@
+video
+
+
+https://streamable.com/yya6m4
+
+
+
 # ⚠️ SLAMMED_VIRUS_PROJECT (v1.0)
 
 A high-performance GDI (Graphics Device Interface) visual stress engine. This project is a digital art piece designed to simulate total system corruption through browser-based rendering exploits.
